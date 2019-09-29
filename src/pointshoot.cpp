@@ -68,6 +68,7 @@
             {
                 state = State::POINT_FINISH;
                 std::cout << "completed SHOOT \n";
+                return geometry_msgs::Twist();
             }
             else
             {
@@ -125,5 +126,5 @@
         }
                  
         } // switch (state)
-        throw std::logic_error("Invalid state in updatepath");
+        // throw std::logic_error("Invalid state in updatepath");
     } 
