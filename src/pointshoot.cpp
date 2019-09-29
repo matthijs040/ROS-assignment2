@@ -22,8 +22,8 @@
             // If the angle is not yet calculated, calculate it once. It is reset once the goal is reached. To be recalculated on the next set goal.
             if(!angle)
             { 
-                double dx = odomUpdate.pose.pose.position.x - goal.pose.position.x;
-                double dz = odomUpdate.pose.pose.position.z - goal.pose.position.z;
+                double dx = goal.pose.position.x - odomUpdate.pose.pose.position.x;
+                double dz = goal.pose.position.z - odomUpdate.pose.pose.position.z;
                 //  double dz = odomUpdate.pose.pose.position.z - goal.pose.position.z;
 
                 angle =  atan2(dz, dx) ;
@@ -60,7 +60,7 @@
         case State::SHOOT :
         {
             const double cX = odomUpdate.pose.pose.position.x, cY = odomUpdate.pose.pose.position.y, cZ = odomUpdate.pose.pose.position.z,
-                         gX = goal.pose.orientation.x,         gY = goal.pose.orientation.y,         gZ = goal.pose.orientation.z;
+                         gX = goal.pose.position.x,         gY = goal.pose.position.y,         gZ = goal.pose.position.z;
 
 
             if(cX == gX && cY == gY && cZ == gZ )
@@ -76,9 +76,9 @@
                 const double errY = gY - cY;
                 const double errZ = gZ - cZ;
                 
-                move.linear.x = linearP * errX;
-                move.linear.y = linearP * errY;
-                move.linear.z = linearP * errZ;
+                move.linear.x = abs(linearP * errX);
+                move.linear.y = abs(linearP * errY);
+                move.linear.z = abs(linearP * errZ);
 
                 // TODO: Threshold movement?
 
