@@ -17,8 +17,12 @@ geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
     {
 
     const double currentAngle = tf::getYaw( odomUpdate.pose.pose.orientation );
-    const double desiredAngle = tf::getYaw( goal.pose.orientation );
 
+    double dx = goal.pose.position.x - odomUpdate.pose.pose.position.x;
+    double dy = goal.pose.position.y - odomUpdate.pose.pose.position.y;
+    //  double dz = odomUpdate.pose.pose.position.z - goal.pose.position.z;
+
+    const double desiredAngle =  atan2(dy, dx) ;
 
     if( currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001 )
     {
