@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(assignment2)
 
-set(-g)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++17 -Wall -Wextra -Wpedantic)
+add_compile_options(-std=c++17 -Wall -Wextra -Wpedantic -g)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)

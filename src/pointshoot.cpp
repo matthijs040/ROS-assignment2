@@ -34,7 +34,7 @@
 
             const double desiredAngle = angle.value();
 
-            if( currentAngle < desiredAngle + 0.0001 && desiredAngle > currentAngle - 0.0001 )
+            if( currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001 )
             {
                 // Reset starting angle. To be recalculated when a new goal is set.
                 angle.reset();
