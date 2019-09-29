@@ -3,10 +3,8 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/Odometry.h"
-#include <cmath>
 #include "../include/pointshoot.h"
 #include <exception>
-#include "angles/angles.h"
 #include "tf/tf.h"
 
  geometry_msgs::Twist Pointshoot::updatePath(const nav_msgs::Odometry odomUpdate)
@@ -27,8 +25,8 @@
                 //  double dz = odomUpdate.pose.pose.position.z - goal.pose.position.z;
 
                 angle =  atan2(dy, dx) ;
-                std::cout << "calculated the angle: " << std::to_string( angles::to_degrees(angle.value()) ) << '\n'; 
-                std::cout << "And current angle == " << std::to_string( angles::to_degrees(currentAngle) )  << '\n'; 
+                //std::cout << "calculated the angle: " << std::to_string( angles::to_degrees(angle.value()) ) << '\n'; 
+                //std::cout << "And current angle == " << std::to_string( angles::to_degrees(currentAngle) )  << '\n'; 
             
             }
 
@@ -47,7 +45,7 @@
                 geometry_msgs::Twist move = geometry_msgs::Twist();
                 double deviation =  desiredAngle - currentAngle;
                 move.angular.z = angularP *  deviation ;
-                std::cout << "moving at X: " + std::to_string( angles::to_degrees(currentAngle) ) + " \n";
+                //std::cout << "moving at X: " + std::to_string( angles::to_degrees(currentAngle) ) + " \n";
 
                 // TODO: Threshold movement?
 
@@ -123,12 +121,9 @@
         
         default:
         {
-            //throw std::logic_error("Invalid state in updatepath");
-            std::cout << "REACHING DEFAULT!!! \n";
-            state = State::POINT_START;
+            throw std::logic_error("Invalid state in updatepath");
         }
                  
         } // switch (state)
-        
-        return geometry_msgs::Twist();  
+        throw std::logic_error("Invalid state in updatepath");
     } 

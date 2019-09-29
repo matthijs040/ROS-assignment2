@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
 
     SubscriptionPublisher<geometry_msgs::Twist, nav_msgs::OdometryPtr> subpub("/cmd_vel", "/odom", getpath);
 
+    std::cout << "awaiting a poseStamped publish on the /goal topic. \n";
+
     ros::spin();
 
     return 0;

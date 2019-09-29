@@ -1,12 +1,8 @@
 #include "ros/ros.h"
 
-#include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/Odometry.h"
-#include <cmath>
 #include "../include/servoing.h"
-#include <exception>
-#include "angles/angles.h"
 #include "tf/tf.h"
 
 geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
@@ -28,7 +24,7 @@ geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
     {
         // Reset starting angle. To be recalculated when a new goal is set.
         angFinished = true;
-        std::cout << "completed POINT_START \n";
+        std::cout << "rotation finished. \n";
         return geometry_msgs::Twist();
     }
     else
@@ -36,7 +32,7 @@ geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
 
         double deviation =  desiredAngle - currentAngle;
         move.angular.z = angularP *  deviation ;
-        std::cout << "moving at X: " + std::to_string( angles::to_degrees(currentAngle) ) + " \n";
+        //std::cout << "moving at X: " + std::to_string( angles::to_degrees(currentAngle) ) + " \n";
         
         // TODO: Threshold movement?
                       
@@ -54,7 +50,7 @@ geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
           && cZ < gZ + 0.01 && cZ > gZ - 0.01 )
         {
             linFinished = true;
-            std::cout << "completed SHOOT \n";
+            std::cout << "linear motion finished. \n";
         }
         else
         {
