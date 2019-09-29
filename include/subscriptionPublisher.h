@@ -10,7 +10,8 @@ class SubscriptionPublisher
 {
 public:
 
-  // NOTE: function can be null and no manipulation will take place on subtype.
+  // NOTE: function can be null which will cause no manipulation to take place on subtype.
+  //       if no transform is applied to subtype it has to be the same as pubtype to be published!
   SubscriptionPublisher(std::string pubtopic, std::string subtopic, std::function<pubtype(subtype)> function)
   {
     pub_ = n_.advertise<pubtype>(pubtopic, 1);
@@ -20,7 +21,6 @@ public:
 
   }
 
-  // NOTE: only produces a publish if a valid function is given or subtype == pubtype.
   void callback(const subtype& in)
   {
     if(_function)
