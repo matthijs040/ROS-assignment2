@@ -98,7 +98,7 @@
             if( currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001 )
             {
                 state = State::DONE;
-                std::cout << "completed POINT_START \n";
+                std::cout << "completed POINT_FINISH \n";
             }
             else
             {
