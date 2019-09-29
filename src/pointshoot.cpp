@@ -99,9 +99,9 @@
             else
             {
                 geometry_msgs::Twist move = geometry_msgs::Twist();
-                move.angular.x = angularP * odomUpdate.pose.pose.orientation.x - goal.pose.orientation.x;
-                move.angular.y = angularP * odomUpdate.pose.pose.orientation.y - goal.pose.orientation.y;
-                move.angular.z = angularP * odomUpdate.pose.pose.orientation.z - goal.pose.orientation.z;
+                move.angular.x = angularP * goal.pose.orientation.x - odomUpdate.pose.pose.orientation.x ;
+                move.angular.y = angularP * goal.pose.orientation.y - odomUpdate.pose.pose.orientation.y ;
+                move.angular.z = angularP * goal.pose.orientation.z - odomUpdate.pose.pose.orientation.z ;
 
                 // TODO: Threshold movement?
 
