@@ -23,10 +23,10 @@
             if(!angle)
             { 
                 double dx = goal.pose.position.x - odomUpdate.pose.pose.position.x;
-                double dz = goal.pose.position.z - odomUpdate.pose.pose.position.z;
+                double dy = goal.pose.position.y - odomUpdate.pose.pose.position.y;
                 //  double dz = odomUpdate.pose.pose.position.z - goal.pose.position.z;
 
-                angle =  atan2(dz, dx) ;
+                angle =  atan2(dy, dx) ;
                 std::cout << "calculated the angle: " << std::to_string( angles::to_degrees(angle.value()) ) << '\n'; 
                 std::cout << "And current angle == " << std::to_string( angles::to_degrees(currentAngle) )  << '\n'; 
             
@@ -45,8 +45,8 @@
             else
             {
                 geometry_msgs::Twist move = geometry_msgs::Twist();
-                double error =  desiredAngle - currentAngle;
-                move.angular.z = angularP *  error ;
+                double deviation =  desiredAngle - currentAngle;
+                move.angular.z = angularP *  deviation ;
                 std::cout << "moving at X: " + std::to_string( angles::to_degrees(currentAngle) ) + " \n";
 
                 // TODO: Threshold movement?
@@ -63,22 +63,26 @@
                          gX = goal.pose.position.x,         gY = goal.pose.position.y,         gZ = goal.pose.position.z;
 
 
-            if(cX == gX && cY == gY && cZ == gZ )
+            //currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001
+            if(  cX < gX + 0.01 && cX > gX - 0.01 
+              && cY < gY + 0.01 && cY > gY - 0.01 
+              && cZ < gZ + 0.01 && cZ > gZ - 0.01 )
             {
                 state = State::POINT_FINISH;
+                std::cout << "completed SHOOT \n";
             }
             else
             {
-                std::cout << "currently in shoot! \n";
+                //std::cout << "currently in shoot! \n";
 
                 geometry_msgs::Twist move = geometry_msgs::Twist();
-                const double errX = gX - cX;
-                const double errY = gY - cY;
-                const double errZ = gZ - cZ;
+                const double deviationX = gX - cX;
+                const double deviationY = gY - cY;
+                const double deviationZ = gZ - cZ;
                 
-                move.linear.x = abs(linearP * errX);
-                move.linear.y = abs(linearP * errY);
-                move.linear.z = abs(linearP * errZ);
+                move.linear.x = abs(linearP * deviationX);
+                move.linear.y = abs(linearP * deviationY);
+                move.linear.z = abs(linearP * deviationZ);
 
                 // TODO: Threshold movement?
 
@@ -89,9 +93,10 @@
 
         case State::POINT_FINISH:
         {
-            if(odomUpdate.pose.pose.orientation.x == goal.pose.orientation.x 
-            && odomUpdate.pose.pose.orientation.y == goal.pose.orientation.y 
-            && odomUpdate.pose.pose.orientation.z == goal.pose.orientation.z )
+             const double currentAngle = tf::getYaw( odomUpdate.pose.pose.orientation );
+             const double desiredAngle = goal.pose.orientation.z;
+
+            if( currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001 )
             {
                 state = State::DONE;
                 std::cout << "completed POINT_START \n";
@@ -99,9 +104,8 @@
             else
             {
                 geometry_msgs::Twist move = geometry_msgs::Twist();
-                move.angular.x = angularP * goal.pose.orientation.x - odomUpdate.pose.pose.orientation.x ;
-                move.angular.y = angularP * goal.pose.orientation.y - odomUpdate.pose.pose.orientation.y ;
-                move.angular.z = angularP * goal.pose.orientation.z - odomUpdate.pose.pose.orientation.z ;
+                const double deviation = desiredAngle - currentAngle;
+                move.angular.z = angularP * deviation ;
 
                 // TODO: Threshold movement?
 
