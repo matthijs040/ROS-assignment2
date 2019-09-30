@@ -3,6 +3,7 @@
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/Odometry.h"
 #include "../include/servoing.h"
+
 #include "tf/tf.h"
 
 geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
@@ -45,12 +46,13 @@ geometry_msgs::Twist Servoing::updatePath(const nav_msgs::Odometry odomUpdate)
 
 
         //currentAngle < desiredAngle + 0.0001 && currentAngle > desiredAngle  - 0.0001
-        if(  cX < gX + 0.01 && cX > gX - 0.01 
-          && cY < gY + 0.01 && cY > gY - 0.01 
-          && cZ < gZ + 0.01 && cZ > gZ - 0.01 )
+        if(  ( cY < gY + 0.01 && cY > gY - 0.01 )
+          && ( cX < gX + 0.01 && cX > gX - 0.01 )
+          && ( cZ < gZ + 0.01 && cZ > gZ - 0.01 ) )
         {
-            linFinished = true;
+            Servoing::linFinished = true;
             std::cout << "linear motion finished. \n";
+            return geometry_msgs::Twist();
         }
         else
         {

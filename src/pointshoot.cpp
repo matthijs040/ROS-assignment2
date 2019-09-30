@@ -5,7 +5,9 @@
 #include "nav_msgs/Odometry.h"
 #include "../include/pointshoot.h"
 #include <exception>
+
 #include "tf/tf.h"
+
 
  geometry_msgs::Twist Pointshoot::updatePath(const nav_msgs::Odometry odomUpdate)
     {
@@ -99,6 +101,7 @@
             {
                 state = State::DONE;
                 std::cout << "completed POINT_FINISH \n";
+                return geometry_msgs::Twist();      
             }
             else
             {
@@ -126,5 +129,5 @@
         }
                  
         } // switch (state)
-        // throw std::logic_error("Invalid state in updatepath");
+        throw std::logic_error("Invalid state in updatepath");
     } 
