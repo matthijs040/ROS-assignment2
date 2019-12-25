@@ -1,0 +1,17 @@
+<!-- Launch file for the second ROS assignment. Select the right stage_controller node below.-->
+
+<launch>
+    <!-- An instance of roscore, if not already running will be started IMPLICITLY. -->
+
+    <!-- pointshoot_node: This type of control first rotates the robot (point) whereafter it drives only forward. (shoot) -->
+    <!-- <node pkg="assignment2" type="pointshoot_node" name="stage_controller" /> -->
+
+    <!-- servoing_node: This type of control does linear and angular motion simultaniously. Resulting in smoother motion. -->
+    <node pkg="assignment2" type="servoing_node" name="stage_controller" />
+
+    <!-- node for stage. It assumes that a file called "empty.world" is placed in the home directory of the user to load in. -->
+    <!-- The worldfile location and name can of course be edited in the argument.-->
+    <!-- NOTE: The path MUST be an absolute path. Stage does NOT accept the home alias ~/empty.world for example. -->
+    <node pkg="stage_ros" type="stageros" name="stage_ros_instance" args="/home/matthew1804/empty.world"/>
+
+</launch>

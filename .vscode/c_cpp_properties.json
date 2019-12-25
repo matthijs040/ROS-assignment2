@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/opt/ros/melodic/include/**",
+                "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/devel/include/**",
+                "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/src/assignment2/include/**",
+                "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/src/assignment3/include/**",
+                "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/src/assignment4/include/**",
+                "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/src/robot4care/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

@@ -1,12 +1,11 @@
-#include "ros/ros.h"
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <geometry_msgs/PoseStamped.h>
+
+#include <nav_msgs/Odometry.h>
 
 #include "../include/servoing.h"
 #include "../include/subscriptionPublisher.h"
-
-#include "geometry_msgs/Twist.h"
-#include "geometry_msgs/PoseStamped.h"
-
-#include "nav_msgs/Odometry.h"
 
 #include <string>
 
@@ -21,7 +20,7 @@ void goalCallback(geometry_msgs::PoseStampedPtr msg)
     }
     else
     {
-        controller = std::make_unique<Servoing>(*msg);       
+        controller = std::make_unique<Servoing>( msg.get()->pose.position );       
     }
 }
 

@@ -1,0 +1,6 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/mnt/c/Users/Matthew/Documents/FHICT/6ROS/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
+}
